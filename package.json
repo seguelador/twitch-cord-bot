@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/seguelador/twitch-cord-bot/issues"
   },
-  "homepage": "https://github.com/seguelador/twitch-cord-bot#readme"
+  "homepage": "https://github.com/seguelador/twitch-cord-bot#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "tmi.js": "^1.5.0"
+  }
 }
