@@ -23,7 +23,7 @@ const onMessageHandler = (target, context, msg, self) => {
     // Remove whitespace from chat message and split it in an array
     const message = msg.trim().split(' ');
     // Get command by shifting it from the array
-    const commandName = msg.shift();
+    const commandName = message.shift();
 
     // If the command is known, let's execute it
     if (commandName === '!play') {
