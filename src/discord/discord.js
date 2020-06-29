@@ -1,7 +1,10 @@
+require('dotenv').config(); // Remove later
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core-discord');
 const client = new Discord.Client();
-const { token, prefix } = require('./config.json');
+
+const token = process.env.DISCORD_BOT_TOKEN;
+console.log(token);
 
 // VoiceConnection to be use in every command
 let connection = null;
@@ -22,7 +25,7 @@ client.on('message', async (message) => {
     // we ignore it
     if (!message.guild) return;
 
-    if (commandName === `${prefix}tc-join`) {
+    if (commandName === '!tc-join') {
         // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voice.channel) {
             connection = await message.member.voice.channel.join();
@@ -31,7 +34,7 @@ client.on('message', async (message) => {
         }
     }
 
-    if (commandName === `${prefix}tc-leave`) {
+    if (commandName === '!tc-leave') {
         if (message.member.voice.channel) {
            await message.member.voice.channel.leave();
         } else {
@@ -40,7 +43,7 @@ client.on('message', async (message) => {
     }
 
     // Play music
-    if (commandName === `${prefix}tc-play`) {
+    if (commandName === '!tc-play') {
         if (message.member.voice.channel) {
             connection.play(await ytdl(content), { type: 'opus' });
         } else {
