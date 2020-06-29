@@ -3,40 +3,46 @@ const ytdl = require('ytdl-core-discord');
 const client = new Discord.Client();
 const { token, prefix } = require('./config.json');
 
-console.log('prefix', prefix);
+// VoiceConnection to be use in every command
+let connection = null;
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', async message => {
+client.on('message', async (message) => {
+    // Remove whitespace from chat message and split it in an array
+    const arrMessage = message.content.trim().split(' ');
+    // Get command by shifting it from the array
+    const commandName = arrMessage.shift();
+    // Get content of the message (after command)
+    const content = arrMessage.join(' ');
+
     // Voice only works in guilds, if the message does not come from a guild,
     // we ignore it
     if (!message.guild) return;
 
-    if (message.content === `${prefix}tc-join`) {
+    if (commandName === `${prefix}tc-join`) {
         // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voice.channel) {
-            const connection = await message.member.voice.channel.join();
-            console.log('Connection', connection);
+            connection = await message.member.voice.channel.join();
         } else {
             message.reply('You need to join a voice channel first!');
         }
     }
 
-    if (message.content === `${prefix}tc-leave`) {
+    if (commandName === `${prefix}tc-leave`) {
         if (message.member.voice.channel) {
-            const connection = await message.member.voice.channel.leave();
+           await message.member.voice.channel.leave();
         } else {
             message.reply('You need to join a voice channel first!');
         }
     }
 
     // Play music
-    if (message.content === `${prefix}tc-play`) {
+    if (commandName === `${prefix}tc-play`) {
         if (message.member.voice.channel) {
-            const connection = await message.member.voice.channel.join();
-            connection.play(await ytdl('https://www.youtube.com/watch?v=XP_mZ0GMqgg'), { type: 'opus' });
+            connection.play(await ytdl(content), { type: 'opus' });
         } else {
             message.reply('You need to join a voice channel first!');
         }
