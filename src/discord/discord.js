@@ -25,7 +25,7 @@ client.on('message', async (message) => {
     // we ignore it
     if (!message.guild) return;
 
-    if (commandName === '!tc-join') {
+    if (commandName === '$join') {
         // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voice.channel) {
             connection = await message.member.voice.channel.join();
@@ -34,7 +34,7 @@ client.on('message', async (message) => {
         }
     }
 
-    if (commandName === '!tc-leave') {
+    if (commandName === '$leave') {
         if (message.member.voice.channel) {
            await message.member.voice.channel.leave();
         } else {
@@ -43,7 +43,7 @@ client.on('message', async (message) => {
     }
 
     // Play music
-    if (commandName === '!tc-play') {
+    if (commandName === '$play' || commandName === '$p') {
         if (message.member.voice.channel) {
             connection.play(await ytdl(content), { type: 'opus' });
         } else {
