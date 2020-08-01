@@ -1,6 +1,6 @@
 require('dotenv').config(); // Remove later when app runs from index.js
 const Discord = require('discord.js');
-const ytdl = require('ytdl-core-discord');
+const Player = require('../player/player');
 const { commandPrefix } = require('./config.json');
 const {
     JOIN,
@@ -15,8 +15,7 @@ const client = new Discord.Client();
 
 const token = process.env.DISCORD_BOT_TOKEN;
 
-// VoiceConnection to be use in every command
-let connection = null;
+const soultrainPlayer = new Player();
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -34,36 +33,51 @@ client.on('message', async (message) => {
     // we ignore it
     if (!message.guild) return;
 
+    // Join Channel
     if (commandName === (commandPrefix + JOIN)) {
         // Only try to join the sender's voice channel if they are in one themselves
         if (message.member.voice.channel) {
             connection = await message.member.voice.channel.join();
-        } else {
-            message.reply('You need to join a voice channel first!');
+            message.channel.send('Que comience la fiesta!');
+
+            // Set Connection to SoultrainPlayer
+            soultrainPlayer.setConnection(connection);
         }
     }
 
+    // Leave Channel
     if (commandName === (commandPrefix + LEAVE)) {
         if (message.member.voice.channel) {
-           await message.member.voice.channel.leave();
-        } else {
-            message.reply('You need to join a voice channel first!');
+            await message.member.voice.channel.leave();
         }
     }
 
     // Play music
     if (commandName === (commandPrefix + PLAY)) {
-        if (message.member.voice.channel) {
-            connection.play(await ytdl(content), { type: 'opus' });
-        } else {
-            message.reply('You need to join a voice channel first!');
+        if (soultrainPlayer.getConnection()) {
+            if (message.member.voice.channel) {
+                const song = { 
+                    title: "Song's name",
+                    song: content,
+                    requested_by: message.member.nickname
+                };
+
+                player.addToPlaylist(song);
+                player.play();
+            } else {
+                message.reply('You need to join a voice channel first!');
+            }
+        } else {
+            message.reply(
+                `Para que Soultrain comience la fiesta, primero debes invitarlo :). Usa ${commandPrefix + JOIN} para comenzar`
+            );
         }
     }
 
     // Stop music
     if (commandName === (commandPrefix + STOP)) {
         if (message.member.voice.channel) {
-           await message.member.voice.channel.leave();
+            await message.member.voice.channel.leave();
         } else {
             message.reply('You need to join a voice channel first!');
         }
