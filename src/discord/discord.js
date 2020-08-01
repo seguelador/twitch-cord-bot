@@ -58,12 +58,12 @@ client.on('message', async (message) => {
             if (message.member.voice.channel) {
                 const song = { 
                     title: "Song's name",
-                    song: content,
+                    url: content,
                     requested_by: message.member.nickname
                 };
 
-                player.addToPlaylist(song);
-                player.play();
+                soultrainPlayer.addToPlaylist(song);
+                soultrainPlayer.play();
             } else {
                 message.reply('You need to join a voice channel first!');
             }

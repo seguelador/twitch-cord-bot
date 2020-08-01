@@ -5,6 +5,7 @@ class Player {
         // connection means the Discord connection
         this.connection = null;
         this.playlist = [];
+        this.playing = false;
     };
 
     getConnection = () => {
@@ -17,13 +18,17 @@ class Player {
 
     // Play Playlist
     play = () => {
-        this.connection.play(ytdl(content), { type: 'opus' });
+        this.playlist.forEach(async (song) => {
+            console.log('Playing: ', song.url);
+            this.connection.play(await ytdl(song.url), { type: 'opus' });
+        });
         console.log(this.playlist);
     };
 
     // Add Song to Playlist
     addToPlaylist = (song) => {
         this.playlist.push(song);
+        console.log('Playlist: ', this.playlist);
     };
 
     // Remove Song from Playlist
