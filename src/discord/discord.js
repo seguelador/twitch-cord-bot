@@ -68,16 +68,6 @@ client.on('message', async (message) => {
             message.reply('You need to join a voice channel first!');
         }
     }
-
-    // Pause music
-    if (commandName === (commandPrefix + PAUSE)) {
-        if (message.member.voice.channel) {
-            connection.end();
-        } else {
-            message.reply('You need to join a voice channel first!');
-        }
-    }
-    console.log(connection.player);
 });
 
 client.login(token);
