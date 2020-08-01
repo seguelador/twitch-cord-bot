@@ -22,8 +22,7 @@
     "discord-player": "^2.3.1",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "tmi.js": "^1.5.0",
-    "ytdl-core-discord": "^1.2.1"
+    "tmi.js": "^1.5.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
