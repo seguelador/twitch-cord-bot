@@ -1,9 +1,9 @@
 require('dotenv').config();
 const tmi = require('tmi.js');
 
-const botUsername = process.env.BOT_USERNAME;
-const oauthToken = process.env.OAUTH_TOKEN;
-const channelName = process.env.CHANNEL_NAME;
+const botUsername = process.env.TWITCH_BOT_USERNAME;
+const oauthToken = process.env.TWITCH_OAUTH_TOKEN;
+const channelName = process.env.TWITCH_CHANNEL_NAME;
 
 // Define configuration options
 const opts = {
@@ -27,7 +27,7 @@ const onMessageHandler = (target, context, msg, self) => {
 
     // If the command is known, let's execute it
     if (commandName === '!play') {
-        const result = sendCommandToDiscord();
+        const result = sendCommandToDiscord(message);
         if (result) {
             client.say(target, `Tu canción fué agregada al playlist`);
             console.log(`* Executed ${commandName} command`);
@@ -44,7 +44,7 @@ const onMessageHandler = (target, context, msg, self) => {
     }
 }
 // Function called when the "play" command is issued
-const sendCommandToDiscord = () => {
+const sendCommandToDiscord = (message) => {
     console.log('sendingCommand to Discord');
     return true;
 }
