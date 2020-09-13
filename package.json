@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/discord/discord.js"
+    "start": "node ./src/discord/discord.js",
+    "dev": "nodemon ./src/discord/discord.js"
   },
   "repository": {
     "type": "git",
