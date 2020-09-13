@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/seguelador/twitch-cord-bot.git"
   },
-  "author": "localhost22",
+  "author": "localhost22 | seguelador",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/seguelador/twitch-cord-bot/issues"
